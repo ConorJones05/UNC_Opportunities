@@ -18,21 +18,3 @@ This repository contains a data scraper designed to sift through UNC opprtunites
 3. **Ranking Algorithm:** Opportunities are ranked based on the buzzword analysis, ensuring that the most relevant and attractive positions are highlighted.
 
 4. **Email Notification:** An automated script sends out a daily email to subscribers, providing a concise summary of the top-ranked job opportunities.
-
-## Getting Started
-
-### Prerequisites
-
-- Python 3.x
-
-### Installation
-
-1. Clone the repository: `git clone https://github.com/your-username/opportunity-scraper.git`
-2. Navigate to the project directory: `cd opportunity-scraper`
-3. Install dependencies: `pipenv install`
-
-### Usage
-
-1. Run the data scraper: `python scraper.py`
-2. Execute the ranking system: `python ranker.py`
-3. Set up the automated daily email script: `python email_notifier.py`
