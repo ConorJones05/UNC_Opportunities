@@ -37,21 +37,56 @@ for i in range(len(date_list)):
         everyother = date_list[i]
         date_list_post.append(everyother)
 
+result_list = []
+
+for i in range(len(date_elements)):
+    paragraphs = date_elements[i].find_all('p')
+    
+    div_row_result = []
+    
+    for paragraph in paragraphs:
+        task = paragraph.text.strip()
+        div_row_result.append(task)
+    
+    result_list.append(div_row_result)
+
+comp_list = []
+
+for i in range(len(result_list)):
+    if len(result_list[i]) > 0:
+        comp_list.append(result_list[i])
+
+
 URL2 = "https://www.blog.dailydoseofds.com/p/75-key-terms-that-all-data-scientists"
 page_words = requests.get(URL2)
 soup2 = BeautifulSoup(page_words.content, "html.parser")
 
 words_elements = soup2.find_all('strong')
 
-buzz_list = []
-
+buzz_unfliterd = []
 for i in words_elements:
     cleaned_words = ''.join(char for char in i.text if char.isalnum() or char.isspace())
-    buzz_list.extend(cleaned_words.split())
+    buzz_unfliterd.extend(cleaned_words.split())
 
-print(buzz_list)
+buzz_list = []
+uselesswords = ["the", "is", "of", "and", "a", "in", "that", "it", 'this', 'what']
+for i in range(len(buzz_unfliterd)):
+    current_word = str(buzz_unfliterd[i]).lower()
+    if current_word not in uselesswords:
+        buzz_list.append(current_word)
 
-libray = {'Title': headings_list[2:], 'Post Date': date_list_post, 'End Date': date_list_close}
+fit_array = []
+for i in range(len(comp_list)):
+    fit_number = 0
+    split_list = str(comp_list[i]).lower().split()
+    for j in range(len(split_list)):
+        for k in range(len(buzz_list)):
+            if split_list[j] == buzz_list[k]:
+                fit_number += 1
+    fit_array.append(fit_number)
+
+libray = {'Title': headings_list[2:], 'Post Date': date_list_post, 'End Date': date_list_close, 'Fit': fit_array}
 df = pd.DataFrame(data=libray)
 
-#print(df)
+
+print(df)
