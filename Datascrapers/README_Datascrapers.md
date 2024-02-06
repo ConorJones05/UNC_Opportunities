@@ -1,20 +1,27 @@
-## Datascrapers
-This file contains a data scraper designed to sift through UNC opprtunites postings, extracting valuable opportunities and ranking them based on relevant data science buzzwords. The resulting rankings are used to generate an automated daily email, providing users with the latest and most fitting job opportunities in the data science domain.
+# Data Scraper for UNC Opportunities Board
 
-## Features
+## Overview
+This Python script scrapes information from the [UNC Opportunities Board](https://our.unc.edu/find/opportunities/) and analyzes the content for relevance to data science terms. Additionally, it fetches key terms from a [blog post](https://www.blog.dailydoseofds.com/p/75-key-terms-that-all-data-scientists) to evaluate the fit of the scraped opportunities with data science terminology.
 
-- **Data Scraper:** A robust web scraper that efficiently gathers job postings from UNC's official channels.
-- **Buzzword Comparison:** Utilizes a  algorithm to compare job descriptions with a curated list of data science buzzwords.
-- **Ranking System:** Ranks opportunities based on the relevance and frequency of data science buzzwords found in job postings.
-- **Automated Daily Email:** Sends a daily email summarizing the top-ranked job opportunities for users' convenience.
+## Prerequisites
+- Python 3.x
+- Install required libraries using:
+  ```bash
+  pip install requests
+  pip install beautifulsoup4
+  pip install pandas
+  ```
 
-## How It Works
+## Usage
+1. Run the script by executing the following command:
+   ```bash
+   python data_scraper.py
+   ```
+2. The script will print a DataFrame containing the scraped data, including the title of opportunities, post date, end date, and a fit score based on data science terminology.
 
-1. **Data Scraping:** The scraper navigates through UNC's job posting platforms, collecting relevant information on available opportunities.
-
-2. **Buzzword Comparison:** Job descriptions are analyzed using natural language processing techniques to identify and quantify the presence of key data science buzzwords.
-
-3. **Ranking Algorithm:** Opportunities are ranked based on the buzzword analysis, ensuring that the most relevant and attractive positions are highlighted.
-
-4. **Email Notification:** An automated script sends out a daily email to subscribers, providing a concise summary of the top-ranked job opportunities.
-
+## Code Explanation
+- The script utilizes the `requests`, `BeautifulSoup`, `re`, and `pandas` libraries.
+- It fetches information from the UNC Opportunities Board page and extracts titles, post dates, and end dates.
+- Key terms for data science are fetched from a blog post and filtered to create a relevant keyword list.
+- The script then calculates the fit score for each opportunity based on the presence of data science terms.
+- The final results are presented in a DataFrame for easy analysis.
