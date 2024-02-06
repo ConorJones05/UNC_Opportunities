@@ -15,7 +15,7 @@ This Python script scrapes information from the [UNC Opportunities Board](https:
 ## Usage
 1. Run the script by executing the following command:
    ```bash
-   python data_scraper.py
+   uncdatabase.py
    ```
 2. The script will print a DataFrame containing the scraped data, including the title of opportunities, post date, end date, and a fit score based on data science terminology.
 
