@@ -26,5 +26,3 @@ This Python script simulates a simplified version of the Battleship game and inc
 - Ship placements are analyzed for fairness using horizontal and vertical distribution testing.
 - The script generates a heatmap of ship placements on the game board.
 - The script sets the groundwork for future implementation of an AI that will find optimal ship placements and strategies for hitting other ships.
-
-Feel free to explore and enhance the script as you work on developing the AI component. Happy gaming!
