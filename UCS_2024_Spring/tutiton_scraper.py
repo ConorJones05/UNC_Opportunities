@@ -1,0 +1,25 @@
+"""UCS Tution Cost Datascraper"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
