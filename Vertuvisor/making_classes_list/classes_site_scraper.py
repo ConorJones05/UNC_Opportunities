@@ -27,7 +27,7 @@ def find_all_elements():
         page2 = requests.get(url)
         soup2 = BeautifulSoup(page2.content, "html.parser")
         courseblocks = soup2.find_all('div', class_='courseblock')
-        for block in courseblocks:
+        for block in range(len(courseblocks)):
             course_code = soup2.find_all(class_="text detail-code margin--tiny text--semibold text--big")
             codes_array = []
             for clean_codes in course_code:
@@ -45,16 +45,18 @@ def find_all_elements():
                 dec_array.append(cleaned_codes)
             course_pre = soup2.find_all(class_="text detail-requisites margin--default")
             pre_array_basic = []
-            for pre in course_pre:
-                pre_clean = pre.get_text(strip=True)[:-1]
+            tester = 0
+            for pre in range(len(course_pre)):
+                pre_clean = course_pre[pre].get_text(strip=True)[:-1]
                 pre_array_basic.append(pre_clean)
-    return codes_array, name_array, dec_array, pre_array_basic
+    return pre_array_basic, tester            
 
 
-#def node_builder(pre_array_basic):
-            
-
+def dict_builder():
+    for i in find_all_elements():
+        return i
     
+print(find_all_elements())
 
 
 
