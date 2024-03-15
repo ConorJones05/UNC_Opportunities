@@ -45,19 +45,25 @@ def find_all_elements():
             else: 
                 dec_array.append(None)
 
-            course_pre = courseblocks[block].find(class_="text detail-requisites margin--default")
-            if course_pre:
-                pre_array_basic.append(course_pre.get_text(strip=True)[:-1])
-            else:
-                pre_array_basic.append(None)
-    return codes_array, name_array, dec_array, pre_array_basic   
+            course_pre_1 = courseblocks[block].find_all(class_="text detail-requisites margin--default")
+            pre_small_array = []
 
+            for element in course_pre_1:
+                course_pre = element.find_all('a', {'title': True})
+                if course_pre:
+                    for a_tag in course_pre:
+                        pre_small_array.append(a_tag.get_text(strip=True).replace('\xa0', ' '))
+                    pre_array_basic.append(pre_small_array)
+                else:
+                    pre_array_basic.append(None)
+
+    return pre_array_basic 
 
 def dict_builder():
     for i in find_all_elements():
         return i
     
-print(find_all_elements())
+print(len(find_all_elements()))
 
 
 
