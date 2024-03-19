@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
+import os
 
 def findURLS():
     URL = "https://catalog.unc.edu/courses/"
@@ -31,6 +32,8 @@ def find_all_elements():
         name_array = []
         dec_array = []
         pre_array_basic = []
+        ideas_in_action = []
+        making_connections = []
 
         for block in range(len(courseblocks)):
             course_code = courseblocks[block].find(class_="text detail-code margin--tiny text--semibold text--big")
@@ -48,23 +51,39 @@ def find_all_elements():
             course_pre_1 = courseblocks[block].find_all(class_="text detail-requisites margin--default")
             pre_small_array = []
 
-            for element in course_pre_1:
-                course_pre = element.find_all('a', {'title': True})
-                if course_pre:
+            if course_pre_1:
+                for element in course_pre_1:
+                    course_pre = element.find_all('a', {'title': True})
                     for a_tag in course_pre:
                         pre_small_array.append(a_tag.get_text(strip=True).replace('\xa0', ' '))
                     pre_array_basic.append(pre_small_array)
-                else:
-                    pre_array_basic.append(None)
-
-    return pre_array_basic 
-
-def dict_builder():
-    for i in find_all_elements():
-        return i
-    
-print(len(find_all_elements()))
+            else:
+                pre_array_basic.append(None)
 
 
+            ideas_cur = courseblocks[block].find(class_="text detail-idea_action margin--default")
+            if ideas_cur:
+                ideas_in_action.append(ideas_cur.get_text(strip=True)[:-1])
+            else:
+                ideas_in_action.append(None)
+            
+            connections_cur = courseblocks[block].find(class_="text detail-idea_action margin--default")
+            if connections_cur:
+                making_connections.append(connections_cur.get_text(strip=True)[:-1])
+            else:
+                making_connections.append(None)
+    return codes_array, pre_array_basic
 
+data = find_all_elements()
+flattened_prerequisites = [', '.join(prereqs) for prereqs in data[1]]
+
+dict_for_pandas = {'Course Codes': data[0], "Prerequiste classes": data[1]}
+
+df = pd.DataFrame(dict_for_pandas)
+
+
+downloads_path = os.path.join(os.path.expanduser('~'), 'Downloads')
+
+# Save DataFrame to a CSV file in the Downloads directory
+df.to_csv(os.path.join(downloads_path, 'output.csv'), index=False)
 
