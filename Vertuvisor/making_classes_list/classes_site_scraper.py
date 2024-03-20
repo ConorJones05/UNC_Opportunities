@@ -75,15 +75,25 @@ def find_all_elements():
     return codes_array, pre_array_basic
 
 data = find_all_elements()
-flattened_prerequisites = [', '.join(prereqs) for prereqs in data[1]]
 
-dict_for_pandas = {'Course Codes': data[0], "Prerequiste classes": data[1]}
+max_prereqs = max(len(prereqs) if prereqs is not None else 0 for prereqs in data[1])
 
-df = pd.DataFrame(dict_for_pandas)
+rows = []
+for course_code, prereqs in zip(data[0], data[1]):
+    row_dict = {'Course Code': course_code}
+    if prereqs is not None:
+        for i, prereq in enumerate(prereqs):
+            row_dict[f'Prereq_{i+1}'] = prereq
+        for j in range(len(prereqs), max_prereqs):
+            row_dict[f'Prereq_{j+1}'] = None
+    else:
+        for j in range(1, max_prereqs + 1):
+            row_dict[f'Prereq_{j}'] = None
+    rows.append(row_dict)
 
+df = pd.DataFrame(rows)
 
-downloads_path = os.path.join(os.path.expanduser('~'), 'Downloads')
+output_directory = "/Users/conor/OneDrive/Desktop/classes"
 
-# Save DataFrame to a CSV file in the Downloads directory
-df.to_csv(os.path.join(downloads_path, 'output.csv'), index=False)
+df.to_csv(os.path.join(output_directory, 'STOR.csv'), index=False)
 
