@@ -21,86 +21,87 @@ def findURLS():
     list_of_links = ['https://catalog.unc.edu/courses/' + ls.lower() + '/' for ls in no_non_dep]
     return list_of_links
 
-url_list = ['https://catalog.unc.edu/courses/stor/']
+url_list = ['https://catalog.unc.edu/courses/stor/'] #  Try two and seee if it still works
 print(findURLS()[:-1])
-# def find_all_elements():
-#     for url in url_list:
-#         page2 = requests.get(url)
-#         soup2 = BeautifulSoup(page2.content, "html.parser")
-#         courseblocks = soup2.find_all('div', class_='courseblock')
-#         codes_array = []
-#         name_array = []
-#         dec_array = []
-#         pre_array_basic = []
-#         ideas_in_action = []
-#         making_connections = []
+def find_all_elements():
+    for url in url_list:
+        page2 = requests.get(url)
+        soup2 = BeautifulSoup(page2.content, "html.parser")
+        courseblocks = soup2.find_all('div', class_='courseblock')
+        codes_array = []
+        name_array = []
+        dec_array = []
+        pre_array_basic = []
+        ideas_in_action = []
+        making_connections = []
 
-#         for block in range(len(courseblocks)):
-#             course_code = courseblocks[block].find(class_="text detail-code margin--tiny text--semibold text--big")
-#             codes_array.append(course_code.get_text(strip=True)[:-1])
+        for block in range(len(courseblocks)):
+            course_code = courseblocks[block].find(class_="text detail-code margin--tiny text--semibold text--big")
+            codes_array.append(course_code.get_text(strip=True)[:-1])
 
-#             course_name = courseblocks[block].find(class_="text detail-title margin--tiny text--semibold text--big")
-#             name_array.append(course_name.get_text(strip=True)[:-1])
+            course_name = courseblocks[block].find(class_="text detail-title margin--tiny text--semibold text--big")
+            name_array.append(course_name.get_text(strip=True)[:-1])
 
-#             course_dec = courseblocks[block].find(class_="courseblockextra")
-#             if course_dec:
-#                 dec_array.append(course_dec.get_text(strip=False).lower())
-#             else: 
-#                 dec_array.append(None)
+            course_dec = courseblocks[block].find(class_="courseblockextra")
+            if course_dec:
+                dec_array.append(course_dec.get_text(strip=False).lower())
+            else: 
+                dec_array.append(None)
 
-#             course_pre_1 = courseblocks[block].find_all(class_="text detail-requisites margin--default")
-#             pre_small_array = []
+            course_pre_1 = courseblocks[block].find_all(class_="text detail-requisites margin--default")
+            pre_small_array = []
 
-#             if course_pre_1:
-#                 for element in course_pre_1:
-#                     course_pre = element.find_all('a', {'title': True})
-#                     for a_tag in course_pre:
-#                         pre_small_array.append(a_tag.get_text(strip=True).replace('\xa0', ' '))
-#                     pre_array_basic.append(pre_small_array)
-#             else:
-#                 pre_array_basic.append(None)
+            if course_pre_1:
+                for element in course_pre_1:
+                    course_pre = element.find_all('a', {'title': True})
+                    for a_tag in course_pre:
+                        pre_small_array.append(a_tag.get_text(strip=True).replace('\xa0', ' '))
+                    pre_array_basic.append(pre_small_array)
+            else:
+                pre_array_basic.append(None)
 
 
-#             ideas_cur = courseblocks[block].find(class_="text detail-idea_action margin--default")
-#             if ideas_cur:
-#                 ideas_in_action.append(ideas_cur.get_text(strip=True)[:-1])
-#             else:
-#                 ideas_in_action.append(None)
+            ideas_cur = courseblocks[block].find(class_="text detail-idea_action margin--default")
+            if ideas_cur:
+                ideas_in_action.append(ideas_cur.get_text(strip=True)[:-1])
+            else:
+                ideas_in_action.append(None)
             
-#             connections_cur = courseblocks[block].find(class_="text detail-idea_action margin--default")
-#             if connections_cur:
-#                 making_connections.append(connections_cur.get_text(strip=True)[:-1])
-#             else:
-#                 making_connections.append(None)
-#         for i in pre_array_basic:
-#             if i is not None:
-#                 for j in range(len(i)):
-#                     if i[j] is not None and len(i[j]) < 5:
-#                         i[j] = i[j-1][0:4] + ' ' + i[j]
+            connections_cur = courseblocks[block].find(class_="text detail-idea_action margin--default")
+            if connections_cur:
+                making_connections.append(connections_cur.get_text(strip=True)[:-1])
+            else:
+                making_connections.append(None)
+        for i in pre_array_basic:
+            if i is not None:
+                for j in range(len(i)):
+                    if i[j] is not None and len(i[j]) < 5:
+                        i[j] = i[j-1][0:4] + ' ' + i[j]
+                        #  This is what I need to fix
 
-#     return codes_array, pre_array_basic
+    return codes_array, pre_array_basic
 
 
-# data = find_all_elements()
+data = find_all_elements()
 
-# max_prereqs = max(len(prereqs) if prereqs is not None else 0 for prereqs in data[1])
+max_prereqs = max(len(prereqs) if prereqs is not None else 0 for prereqs in data[1])
 
-# rows = []
-# for course_code, prereqs in zip(data[0], data[1]):
-#     row_dict = {'Course Code': course_code}
-#     if prereqs is not None:
-#         for i, prereq in enumerate(prereqs):
-#             row_dict[f'Prereq_{i+1}'] = prereq
-#         for j in range(len(prereqs), max_prereqs):
-#             row_dict[f'Prereq_{j+1}'] = None
-#     else:
-#         for j in range(1, max_prereqs + 1):
-#             row_dict[f'Prereq_{j}'] = None
-#     rows.append(row_dict)
+rows = []
+for course_code, prereqs in zip(data[0], data[1]):
+    row_dict = {'Course Code': course_code}
+    if prereqs is not None:
+        for i, prereq in enumerate(prereqs):
+            row_dict[f'Prereq_{i+1}'] = prereq
+        for j in range(len(prereqs), max_prereqs):
+            row_dict[f'Prereq_{j+1}'] = None
+    else:
+        for j in range(1, max_prereqs + 1):
+            row_dict[f'Prereq_{j}'] = None
+    rows.append(row_dict)
 
-# df = pd.DataFrame(rows)
+df = pd.DataFrame(rows)
 
-# output_directory = "/Users/conor/OneDrive/Desktop/classes"
+output_directory = "/Users/conor/OneDrive/Desktop/classes"
 
-# df.to_csv(os.path.join(output_directory, 'Filled_Out_STOR.csv'), index=False)
+df.to_csv(os.path.join(output_directory, 'Filled_Out_STOR.csv'), index=False)
 
