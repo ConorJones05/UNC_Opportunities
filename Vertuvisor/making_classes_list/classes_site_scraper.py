@@ -101,4 +101,6 @@ for i, url in enumerate(url_list):
     df.to_csv(os.path.join(output_directory, f'Classes for {major_abrv[i]}.csv'), index=False)
     print(f'File {major_abrv[i]} has been created')
     print(f'Program is {i/len(url_list)}% Complete')
+print('')
+print('')
 print("Program has finished running ")
