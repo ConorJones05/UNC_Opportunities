@@ -21,7 +21,7 @@ def findURLS():
     list_of_links = ['https://catalog.unc.edu/courses/' + ls.lower() + '/' for ls in no_non_dep]
     return list_of_links[:-1], no_non_dep
 
-url_list, major_abrv = ['https://catalog.unc.edu/courses/stor/'], findURLS()[1]
+url_list, major_abrv = findURLS()[0], findURLS()[1]
 
 def find_all_elements(url):
     page2 = requests.get(url)
@@ -71,17 +71,11 @@ def find_all_elements(url):
         # else:
         #     making_connections.append(None)
     
-    for prereqs in pre_array_basic:
-        if prereqs is not None:
-            for i, prereq in enumerate(prereqs):
-                if len(prereq) < 5:
-                    len_of_char_code = sum(1 for x in prereq if not x.isdigit())
-                    if len_of_char_code == 4:
-                        prereqs[i] = prereqs[i-1][0:4] + ' ' + prereq
-                    elif len_of_char_code == 3:
-                        prereqs[i] = prereqs[i-1][0:3] + ' ' + prereq
-                    else:
-                        assert "Error in the length of code"
+    for i in pre_array_basic:
+            if i is not None:
+                for j in range(len(i)):
+                    if i[j] is not None and len(i[j]) < 5:
+                        i[j] = i[j-1][0:4] + ' ' + i[j]
 
     return codes_array, pre_array_basic
 
@@ -106,4 +100,5 @@ for i, url in enumerate(url_list):
     df = pd.DataFrame(rows)
     df.to_csv(os.path.join(output_directory, f'Classes for {major_abrv[i]}.csv'), index=False)
     print(f'File {major_abrv[i]} has been created')
+    print(f'Program is {i/len(url_list)}% Complete')
 print("Program has finished running ")
