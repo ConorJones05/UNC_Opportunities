@@ -23,10 +23,15 @@ def findURLS():
 
 url_list, major_abrv = findURLS()[0], findURLS()[1]
 
+
 def find_all_elements(url):
     page2 = requests.get(url)
     soup2 = BeautifulSoup(page2.content, "html.parser")
     courseblocks = soup2.find_all('div', class_='courseblock')
+    
+    if not courseblocks:  # If no course blocks are found, return empty lists
+        return [], []
+
     codes_array = []
     name_array = []
     dec_array = []
@@ -82,7 +87,7 @@ def find_all_elements(url):
 
 for i, url in enumerate(url_list):
     data = find_all_elements(url)
-    max_prereqs = max(len(prereqs) if prereqs is not None else 0 for prereqs in data[1])
+    max_prereqs = max(((len(prereqs) if prereqs is not None else 0) for prereqs in data[1]), default=0)
 
     rows = []
     for course_code, prereqs in zip(data[0], data[1]):
@@ -96,11 +101,11 @@ for i, url in enumerate(url_list):
             for j in range(1, max_prereqs + 1):
                 row_dict[f'Prereq_{j}'] = None
         rows.append(row_dict)
-    output_directory = "/Users/conor/OneDrive/Desktop/classes"
+    output_directory = "/Users/conor/conorjones-github/ConorJonesProjects/Vertuvisor/making_classes_list/classes_folder"
     df = pd.DataFrame(rows)
-    df.to_csv(os.path.join(output_directory, f'Classes for {major_abrv[i]}.csv'), index=False)
+    df.to_csv(os.path.join(output_directory, f'Class_{major_abrv[i]}.csv'), index=False)
     print(f'File {major_abrv[i]} has been created')
-    print(f'Program is {i/len(url_list)}% Complete')
+    print(f'Program is {int(i/len(url_list)*100)}% Complete')
 print('')
 print('')
 print("Program has finished running ")
