@@ -1,12 +1,31 @@
-from treelib import Node, Tree
+import csv
+import networkx as nx
+import matplotlib.pyplot as plt
 
-tree = Tree()
+def create_course_graph(csv_file):
+    course_graph = {}
+    with open(csv_file, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            course = row[0]
+            prerequisites = row[1:]
+            course_graph[course] = prerequisites
+    return course_graph
 
-tree.create_node("Harry", "harry")  # No parent means its the root node
-tree.create_node("Jane",  "jane"   , parent="harry")
-tree.create_node("Bill",  "bill"   , parent="harry")
-tree.create_node("Diane", "diane"  , parent="jane")
-tree.create_node("Mary",  "mary"   , parent="diane")
-tree.create_node("Mark",  "mark"   , parent="jane")
+def visualize_course_graph(course_graph):
+    G = nx.DiGraph()
+    for course, prerequisites in course_graph.items():
+        for prerequisite in prerequisites:
+            G.add_edge(prerequisite, course)
 
-tree.show()
+    # Use nx_agraph.graphviz_layout for hierarchical layout
+    pos = nx.drawing.nx_agraph.graphviz_layout(G, prog="dot")
+
+    nx.draw(G, pos, with_labels=True, node_size=2000, node_color="skyblue", font_size=10, font_weight="bold")
+    plt.title("Course Prerequisite Sugiyama Diagram")
+    plt.show()
+
+if __name__ == "__main__":
+    csv_file = "ConorJonesProjects/Vertuvisor/making_classes_list/classes_folder/Class_RELI.csv"  # Replace with your CSV file path
+    course_graph = create_course_graph(csv_file)
+    visualize_course_graph(course_graph)
