@@ -1,4 +1,3 @@
-```markdown
 # Vertuvisor
 
 Vertuvisor is a tool designed to assist students at UNC (University of North Carolina) in planning their coursework effectively. By analyzing students' majors and strengths, Vertuvisor generates personalized four-year plans that align with their academic goals and interests.
