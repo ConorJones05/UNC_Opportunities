@@ -54,6 +54,6 @@ Contributions to Vertuvisor are welcome! If you'd like to contribute, please fol
 ## License
 
 [MIT License](LICENSE)
-```
+
 
 Feel free to adjust the content as needed to fit your project's specific requirements. Let me know if you need further assistance!
