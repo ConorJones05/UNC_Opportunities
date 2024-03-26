@@ -1,17 +1,21 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import pandas as pd
+from cleaning_raw_massive import nodes_builder, connections, layers 
+
+df = pd.read_csv('/Users/conor/conorjones-github/ConorJonesProjects/Vertuvisor/making_classes_list/classes_folder/Class_BIOL.csv')
 
 G = nx.DiGraph()
 
 # Add nodes
-G.add_nodes_from(['A', 'B', 'C', 'D', 'E', 'F', 'G'])
+G.add_nodes_from(nodes_builder(df))
 
 # Add edges
-edges = [('A', 'B'), ('A', 'C'), ('B', 'D'), ('C', 'D'), ('C', 'E'), ('D', 'A'), ('E', 'A')]  # Example of adding multiple edges
+edges = connections(df)  # Example of adding multiple edges
 G.add_edges_from(edges)
 
 # Draw the graph with layers
-layers = [['A'], ['B', 'C'], ['D', 'E'], ['F', 'G']]  # Define layers
+layers = layers(df)  # Define layers
 pos = {}
 y = 3  # Initial y position for the first layer
 for layer in layers:
@@ -21,8 +25,5 @@ for layer in layers:
         x += 1  # Increment x position for the next node in the layer
     y += 1  # Increment y position for the next layer
 
-nx.draw(G, pos, with_labels=True, node_size=1500, node_color='skyblue', font_size=15, arrows=True)
+nx.draw(G, pos, with_labels=True, node_size=500, node_color='skyblue', font_size=3, arrows=True)  # Decrease font_size to make labels smaller
 plt.show()
-
-# Optionally, export to Graphviz DOT format
-nx.nx_agraph.write_dot(G, 'sugiyama_graph.dot')
