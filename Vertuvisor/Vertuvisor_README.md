@@ -1,55 +1,60 @@
+```markdown
 # Vertuvisor
 
-## Overview
+Vertuvisor is a tool designed to assist students at UNC (University of North Carolina) in planning their coursework effectively. By analyzing students' majors and strengths, Vertuvisor generates personalized four-year plans that align with their academic goals and interests.
 
-This project aims to scrape course information from two UNC websites to gather data on classes and departments. The script scrapes HTML content from the websites, parses it, and generates CSV files containing information about classes and their prerequisites.
+## Features
 
-## Requirements
+- **Major Scraping**: Vertuvisor scrapes major and minor information from the UNC catalog website, categorizing majors into Arts and Sciences based on degree type (B.A. or B.S.).
+  
+- **Course Scraping**: The tool extracts course details, including course codes and prerequisites, from the UNC catalog.
 
-- Python 3.x
-- Libraries: requests, BeautifulSoup, pandas
+- **Data Organization**: Vertuvisor organizes course information into CSV files, with each file containing courses for a specific major. This facilitates easy access and analysis of course data.
 
-## Installation
+- **PDF Text Extraction**: Additionally, Vertuvisor includes a function to extract text from PDF files, which can be useful for gathering additional information related to courses or majors.
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/ConorJones05/ConorJonesProjects.git
-```
-
-2. Install the required libraries:
-
-```bash
-pip install requests
-pip install beautifulsoup4
-pip install pandas
-```
+- **CSV File Combination**: Vertuvisor provides a function to combine multiple CSV files into a single DataFrame. This is useful for aggregating data from different sources or organizing data for analysis.
 
 ## Usage
 
-1. Run the Python script `classes_site_scraper.py`.
-2. The script will scrape the specified UNC websites for course information.
-3. CSV files containing class details and prerequisites will be generated in the specified output directory.
+To use Vertuvisor, follow these steps:
 
-## Configuration
+1. Clone the repository to your local machine.
+2. Install the required dependencies by running `pip install -r requirements.txt`.
+3. Run the provided Python scripts to scrape major and course information, organize the data, and generate four-year plans.
 
-- Modify the `url_list` and `output_directory` variables in the script to scrape different UNC websites and specify the output directory for CSV files.
-- Customize the script as needed to extract additional information from the websites.
+Example usage:
 
-## Example
-
-```python
-python scraper.py
+```bash
+python scrape_majors.py
+python scrape_courses.py
+python organize_data.py
+python combine_csv_files.py
 ```
 
-## Contributors
+## Dependencies
 
-- [Conor Jones](https://github.com/COnorJones05)
+Vertuvisor relies on the following Python libraries:
+
+- requests
+- BeautifulSoup
+- pandas
+- PyPDF2
+
+Ensure these dependencies are installed before running the scripts.
+
+## Contributing
+
+Contributions to Vertuvisor are welcome! If you'd like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and ensure the code passes any existing tests.
+4. Submit a pull request with a clear description of your changes.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[MIT License](LICENSE)
+```
 
----
-
-Feel free to adjust it according to your project's specific details and requirements!
+Feel free to adjust the content as needed to fit your project's specific requirements. Let me know if you need further assistance!
