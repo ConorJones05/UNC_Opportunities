@@ -11,11 +11,11 @@ G = nx.DiGraph()
 G.add_nodes_from(nodes_builder(df))
 
 # Add edges
-edges = connections(df)  # Example of adding multiple edges
+edges = connections(df) #connections
 G.add_edges_from(edges)
 
 # Draw the graph with layers
-layers = layers(df)  # Define layers
+layers = layers(df)  # layers
 pos = {}
 y = 3  # Initial y position for the first layer
 for layer in layers:
