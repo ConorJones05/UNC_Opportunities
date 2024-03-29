@@ -1,8 +1,6 @@
 import pandas as pd
 import re
 
-df = pd.read_csv('/Users/conor/conorjones-github/ConorJonesProjects/Vertuvisor/making_classes_list/classes_folder/Class_AAAD.csv')
-
 def nodes_builder(file):
     data_list = []
     for i in range(len(file.columns)):

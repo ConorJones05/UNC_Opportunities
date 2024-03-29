@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from cleaning_raw_massive import nodes_builder, connections, layers 
 
-df = pd.read_csv('/Users/conor/conorjones-github/ConorJonesProjects/Vertuvisor/making_classes_list/classes_folder/Class_BIOL.csv')
-
 def make_tree(df):
     G = nx.DiGraph()
 
