@@ -1,6 +1,6 @@
 import pickle
 import pandas as pd
-from tree_visualization.classes_tree import build_tree
+from classes_tree import build_tree
 
 
 with open('my_dict.pkl', 'rb') as f:
