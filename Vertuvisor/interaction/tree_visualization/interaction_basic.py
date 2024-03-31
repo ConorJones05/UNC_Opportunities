@@ -1,7 +1,6 @@
 import pickle
 import pandas as pd
-from classes_tree import build_tree
-
+from classes_tree import make_tree
 
 with open('my_dict.pkl', 'rb') as f:
     classes = pickle.load(f)
@@ -56,7 +55,13 @@ for key in Nodes:
         for column in range(biggest):
             output[f"Prereq{column+1}"].append(None)
 
+max_length = max(len(prereqs) if prereqs else 0 for prereqs in output.values())
 
+# Pad the prerequisites lists with None values
+for key in output.keys():
+    output[key] += [None] * (max_length - len(output[key]))
+
+# Create DataFrame
 df = pd.DataFrame(output)
 
-build_tree(df)
+make_tree(df)

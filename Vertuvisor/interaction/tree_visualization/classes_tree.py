@@ -14,10 +14,10 @@ def make_tree(df):
     G.add_edges_from(edges)
 
     # Draw the graph with layers
-    layers = layers(df)  # layers
+    lay = layers(df)  # layers
     pos = {}
     y = 3  # Initial y position for the first layer
-    for layer in layers:
+    for layer in lay:
         x = 0  # Initial x position for the nodes in the current layer
         for node in layer:
             pos[node] = (x, -y)  # Assign position to the node
