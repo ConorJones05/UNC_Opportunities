@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from cleaning_raw_massive import nodes_builder, connections, layers 
 
-def make_tree(df):
+def make_tree(df, colors):
     G = nx.DiGraph()
 
     # Add nodes
@@ -24,5 +24,5 @@ def make_tree(df):
             x += 1  # Increment x position for the next node in the layer
         y += 1  # Increment y position for the next layer
 
-    nx.draw(G, pos, with_labels=True, node_size=500, node_color='skyblue', font_size=3, arrows=True)  # Decrease font_size to make labels smaller
+    nx.draw(G, pos, with_labels=True, node_size=500, node_color=colors, font_size=3, arrows=True)  # Decrease font_size to make labels smaller
     plt.show()

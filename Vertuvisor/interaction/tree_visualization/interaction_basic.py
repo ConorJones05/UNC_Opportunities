@@ -61,7 +61,16 @@ max_length = max(len(prereqs) if prereqs else 0 for prereqs in output.values())
 for key in output.keys():
     output[key] += [None] * (max_length - len(output[key]))
 
+colors =[]
+
+for i in Nodes:
+    if i in search:
+        colors.append('green')
+    else:
+        colors.append('skyblue')
+
+
 # Create DataFrame
 df = pd.DataFrame(output)
-
-make_tree(df)
+print(colors)
+make_tree(df, colors)

@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-def findURLS():
+def findURLS_majors():
     URL = "https://catalog.unc.edu/undergraduate/programs-study/"
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -15,23 +15,29 @@ def findURLS():
 
     Arts = []
     Science = []
-    majors_bycat = [Arts, Science]
+    majors_bycat = {'Arts': Arts, 'Science': Science}
     minors = []
 
     for major in list_of_major_and_minors:
         if 'Major' in major:
             if 'B.A.' in major:
-                Arts.append(major)
+                curent_class = major.replace(",", ":")
+                curent_class = major.replace("-", "- ")
+                Arts.append(curent_class)
             elif 'B.S.' in major:
-                Science.append(major)
+                curent_class = major.replace(",", ":")
+                curent_class = major.replace("-", "- ")
+                Science.append(curent_class)
             else:
                 assert "No BA or BS"
         elif 'Minor' in major:
-            minors.append(major)
+            curent_class = major.replace(",", ":")
+            curent_class = major.replace("-", "- ")
+            minors.append(curent_class)
 
     lowercase_majors_and_minors = [x.lower() for x in list_of_major_and_minors]
     
 
     return majors_bycat, minors
 
-print(findURLS())
+print(findURLS_majors())
