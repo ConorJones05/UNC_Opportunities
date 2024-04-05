@@ -1,0 +1,15 @@
+/* CSS code for styling the container and centering the textbox */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Set the container height to full viewport height */
+}
+
+/* CSS code for styling the textbox */
+#Name {
+    width: 600px; /* Adjust the width as needed */
+    height: 500px; /* Adjust the height as needed */
+    /* You can also add other styling properties like font-size, padding, etc. */
+}
