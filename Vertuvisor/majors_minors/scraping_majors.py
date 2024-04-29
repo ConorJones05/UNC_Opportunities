@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-def findURLS_majors():
+def findURLS_majors_and_names():
     URL = "https://catalog.unc.edu/undergraduate/programs-study/"
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -34,10 +34,16 @@ def findURLS_majors():
             curent_class = major.replace(",", ":")
             curent_class = major.replace("-", "- ")
             minors.append(curent_class)
-
-    lowercase_majors_and_minors = [x.lower() for x in list_of_major_and_minors]
     
+    links = []
+    for section in sections:
+        ul = section.find_next('ul')
+        items = ul.find_all('li')
+        for item in items:
+            links.append(item.text.strip())
 
-    return majors_bycat, minors
 
-print(findURLS_majors())
+
+    return links
+
+print(findURLS_majors_and_names())
