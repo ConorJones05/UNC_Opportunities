@@ -1,0 +1,88 @@
+body {
+    background-color: whitesmoke;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh; /* Full height */
+    margin: 0; /* Remove default margin */
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    flex-direction: column; /* Ensure items stack vertically */
+}
+
+a {
+    color: black;
+    text-decoration-line: none;
+    font-size: 20px;
+    margin: 20px;
+}
+
+h1 {
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+header {
+    background-color: #7BAFD4;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%; /* Make header full width */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+li:hover {
+    text-decoration-line: underline;
+}
+
+.instructions {
+    text-align: center;
+    margin-bottom: 20px; /* Space between header and form */
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* Stack form elements vertically */
+    align-items: center; /* Center form elements */
+    justify-content: center; /* Center form elements */
+}
+
+input[type="text"], select {
+    width: 200px;
+    height: 40px;
+    margin: 10px 0; /* Space between inputs */
+    text-align: center;
+    background-color: #7BAFD4;
+    border-radius: 5px;
+    border: none; /* Remove default border */
+    padding: 5px; /* Add some padding */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+input[type="submit"] {
+    width: 100px;
+    height: 40px;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px; /* Add space between the last select box and the submit button */
+}

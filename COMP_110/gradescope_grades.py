@@ -26,7 +26,6 @@ class Gradescope_Grades:
         self.find_indexes()
         unique_indexes = list(set(self.ls_indexes + self.qz_indexes + self.cq_indexes + self.ex_indexes + self.rd_indexes))
         assignment_names = [self.raw_input[i:i+5].strip() for i in unique_indexes]
-        print(assignment_names)
         return assignment_names
 
     def assignment_types(self) -> list:
@@ -43,7 +42,6 @@ class Gradescope_Grades:
                 types.append('Extra??????')
             elif 'RD' in name:
                 types.append('Reading')
-        print(types)
         return types
 
     def points_earned_and_out_of(self) -> tuple:
@@ -56,22 +54,20 @@ class Gradescope_Grades:
                 if self.raw_input[j + index] == '/':
                     tf = False
                     slash_indexes.append(j + index)
-                    print(slash_indexes)
-                elif self.raw_input[j + index] == 'S' or self.raw_input[j + index] == "U" or self.raw_input[j + index] == "N":
-                    # Returning None if the status is "Submitted", "Not Submitted", or "Ungraded"
-                    slash_indexes.append(None)
+                elif self.raw_input[j + index] == 'S' or self.raw_input[j + index] == 'U' or self.raw_input[j + index] == 'N':
                     tf = False
+                    slash_indexes.append(j + index)
                 else:
                     index += 1 
         points_gotten = []
         points_out_of = []
         for i in slash_indexes:
-            if i is None:
-                points_gotten.append(None)
-                points_out_of.append(None)
-            elif self.raw_input[i + 1] == ' ' and self.raw_input[i - 1] == ' ':
+            if self.raw_input[i + 1] == ' ' and self.raw_input[i - 1] == ' ':
                 points_gotten.append(self.raw_input[i-6:i])
                 points_out_of.append(self.raw_input[i+1:i+7:])
+            else:
+                points_gotten.append(None)
+                points_out_of.append(None)
         for i in range(len(points_gotten)):
             if points_gotten[i] is not None:
                 points_gotten[i] = float(''.join(char for char in points_gotten[i] if not char.isalpha() and char != ' '))
@@ -79,9 +75,6 @@ class Gradescope_Grades:
             if points_out_of[i] is not None:
                 points_out_of[i] = float(''.join(char for char in points_out_of[i] if not char.isalpha() and char != ' '))
         return points_gotten, points_out_of
-
-
-
 
     def calculate_percentage(self) -> list[float]:
         points_gotten, points_out_of = self.points_earned_and_out_of()
@@ -91,7 +84,6 @@ class Gradescope_Grades:
                 scores.append((points_gotten[i] / points_out_of[i]) * 100)
             else:
                 scores.append(None)
-        print(scores)
         return scores
 
     def __str__(self) -> str:
@@ -105,12 +97,18 @@ class Gradescope_Grades:
         result += "Points Earned: {}\n".format(points_gotten)
         result += "Out of: {}\n".format(points_out_of)
         result += "Percentage: {}\n".format(scores)
-    
         return result
+    
+    def make_dataframe(self):
+        assignment_names = self.assignment_names()
+        assignment_types = self.assignment_types()
+        points_gotten, points_out_of = self.points_earned_and_out_of()
+        scores = self.calculate_percentage()
+
+        data = {'assignment_names': assignment_names, 'assignment_types': assignment_types, 'points_gotten': points_gotten, 'points_out_of': points_out_of, 'scores': scores}
+
+        return pd.DataFrame(data)
 
 
-
-
-
-x = Gradescope_Grades("LS27 - Operator Overloading 2.0 / 2.0 Apr 15 at 12:00AMApr 16 at 11:59PM Late Due Date: Apr 22 at 11:59PM CQ08 - Practice with OOP 100.0 / 100.0 Apr 12 at 12:00AMApr 12 at 11:59PM Late Due Date: Apr 18 at 11:59PM")
-print(x)
+x = Gradescope_Grades("EX06 - Dictionary Unit Tests 96.0 / 100.0 Mar 06 at 5:00PMMar 21 at 11:59PM Late Due Date: Mar 28 at 11:59PM")
+print(x.make_dataframe())
