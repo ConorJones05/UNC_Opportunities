@@ -1,10 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
-def findURLS_majors_and_names():
+def majors_and_names() -> list[str]:
     URL = "https://catalog.unc.edu/undergraduate/programs-study/"
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
+    #  Pulling of HTML 
     list_of_major_and_minors = []
     sections = soup.find_all('h2', class_='letternav-head')
     for section in sections:
@@ -12,29 +14,30 @@ def findURLS_majors_and_names():
         items = ul.find_all('li')
         for item in items:
             list_of_major_and_minors.append(item.text.strip())
+    #  Makes an unfiltered list of all majors and minors from the website
+    return list_of_major_and_minors
 
-    Arts = []
-    Science = []
-    majors_bycat = {'Arts': Arts, 'Science': Science}
+
+def cleaning_majors_minors(names):
+    arts = []
+    science = []
     minors = []
-
-    for major in list_of_major_and_minors:
+    for major in names:
         if 'Major' in major:
             if 'B.A.' in major:
-                curent_class = major.replace(",", ":")
-                curent_class = major.replace("-", "- ")
-                Arts.append(curent_class)
+                arts.append(major)
             elif 'B.S.' in major:
-                curent_class = major.replace(",", ":")
-                curent_class = major.replace("-", "- ")
-                Science.append(curent_class)
-            else:
-                assert "No BA or BS"
+                science.append(major)
         elif 'Minor' in major:
-            curent_class = major.replace(",", ":")
-            curent_class = major.replace("-", "- ")
-            minors.append(curent_class)
-    
+            minors.append(major)
+    #  Spilting the diffrent majors/minors into diffrent lists
+
+    return arts, science, minors
+
+
+
+
+def make_URL():    
     links = []
     for section in sections:
         ul = section.find_next('ul')
@@ -42,8 +45,6 @@ def findURLS_majors_and_names():
         for item in items:
             links.append(item.text.strip())
 
-
-
     return links
 
-print(findURLS_majors_and_names())
+print(cleaning_majors_minors(majors_and_names()))
