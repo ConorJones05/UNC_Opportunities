@@ -1,3 +1,6 @@
+"""Fist attempt at pulling site infomation all info can be found now on 
+ConorJonesProjects/Vertuvisor/making_classes_list/building_bd_class_elements.py"""
+
 import requests
 from bs4 import BeautifulSoup
 import re
