@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
+import os
 
 URL2 = "https://www.blog.dailydoseofds.com/p/75-key-terms-that-all-data-scientists"
 page_words = requests.get(URL2)
@@ -21,6 +22,9 @@ for i in range(len(buzz_unfliterd)):
     if current_word not in uselesswords:
         buzz_list.append(current_word)
 
-list = {'buzz list':buzz_list}
-file = pd.DataFrame(data = list)
-pd.DataFrame.to_csv(file)
+dataframe = {'buzz list': buzz_list}
+df=pd.DataFrame(dataframe)
+
+csv_file_path = 'C:\Users\conor\OneDrive\Desktop\UNC_Opportunities\buzzwords.py'
+
+df.to_csv(csv_file_path, index=False)
