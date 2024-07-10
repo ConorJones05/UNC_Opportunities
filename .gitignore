@@ -1,1 +1,2 @@
-config.py#Path to the repo
+# Ignore the config.py file
+config.py
