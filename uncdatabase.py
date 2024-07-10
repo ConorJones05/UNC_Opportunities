@@ -1,9 +1,11 @@
-"""Datascrapter for UNC opprotuites board"""
+"""Datascraper for UNC opprotuites board"""
 import requests
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
 
+
+buzz_list = pd.read_csv("buzzwords.csv")['buzz_list'].tolist()
 URL = "https://our.unc.edu/find/opportunities/"
 page = requests.get(URL)
 
@@ -55,3 +57,19 @@ comp_list = []
 for i in range(len(result_list)):
     if len(result_list[i]) > 0:
         comp_list.append(result_list[i])
+
+fit_array = []
+for i in range(len(comp_list)):
+    fit_number = 0
+    split_list = str(comp_list[i]).lower().split()
+    for j in range(len(split_list)):
+        for k in range(len(buzz_list)):
+            if split_list[j] == buzz_list[k]:
+                fit_number += 1
+    fit_array.append(fit_number)
+
+libray = {'Title': headings_list[2:], 'Post Date': date_list_post, 'End Date': date_list_close, 'Fit': fit_array}
+df = pd.DataFrame(data=libray)
+
+
+print(df)

@@ -26,7 +26,7 @@ for i in range(len(buzz_unfliterd)):
     if current_word not in uselesswords:
         buzz_list.append(current_word)
 
-dataframe = {'buzz list': buzz_list}
+dataframe = {'buzz_list': buzz_list}
 df=pd.DataFrame(dataframe)
 
 csv_file_path = r'C:\Users\conor\OneDrive\Desktop\UNC_Opportunities\buzzwords.csv'
