@@ -2,7 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
-import os
+
+try:
+    from config import CSV_FILE_PATH
+except ImportError:
+    CSV_FILE_PATH = None
 
 URL2 = "https://www.blog.dailydoseofds.com/p/75-key-terms-that-all-data-scientists"
 page_words = requests.get(URL2)
@@ -25,6 +29,9 @@ for i in range(len(buzz_unfliterd)):
 dataframe = {'buzz list': buzz_list}
 df=pd.DataFrame(dataframe)
 
-csv_file_path = 'C:\Users\conor\OneDrive\Desktop\UNC_Opportunities\buzzwords.py'
+csv_file_path = r'C:\Users\conor\OneDrive\Desktop\UNC_Opportunities\buzzwords.csv'
 
-df.to_csv(csv_file_path, index=False)
+if CSV_FILE_PATH:
+    df.to_csv(CSV_FILE_PATH, index=False)
+else:
+    print("CSV file path is not set.")
