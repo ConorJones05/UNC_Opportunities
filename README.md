@@ -61,9 +61,6 @@ To automate the execution of your scripts, you can set up a cron job.
    ```bash
    # Run main scraper script daily at 8 AM
    0 8 * * * /usr/bin/python3 /path/to/your/main_script.py
-
-   # Run buzzwords updater script every Sunday at 9 AM
-   0 9 * * 0 /usr/bin/python3 /path/to/your/buzzwords_updater.py
    ```
 
    Make sure to replace `/usr/bin/python3` with the path to your Python interpreter and `/path/to/your/` with the path to your script files.
