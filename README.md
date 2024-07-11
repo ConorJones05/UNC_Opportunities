@@ -12,7 +12,7 @@ This project automates the process of sending email notifications for new opport
 
 1. **Install Required Libraries:**
    ```bash
-   pip install pandas
+   pip install pandas requests BeautifulSoup
    ```
    
 2. **Create a Gmail Account and App Password**
