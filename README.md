@@ -1,7 +1,3 @@
-Got it! Here's the revised README focusing on setting up Task Scheduler on Windows and cron on Unix-based systems specifically for running the email sender script:
-
----
-
 # README for UNC Opportunities Board Email Sender
 
 ## Overview
@@ -18,8 +14,12 @@ This project automates the process of sending email notifications for new opport
    ```bash
    pip install pandas
    ```
+   
+2. **Create a Gmail Account and App Password**
+   - To automate email, you must create a Gmail account to send the email from. Follow the instructions [here](https://support.google.com/mail/answer/56256?hl=en) to create an account.
+   - You must also create an app password to allow the script to access the account. Follow the instructions [here](https://support.google.com/mail/answer/185833?hl=en) to create an app password.
 
-2. **Configuration:**
+4. **Configuration:**
    Create a `config.py` file with the following content:
    ```python
    SENDER_EMAIL = "your_email@gmail.com"
@@ -27,7 +27,7 @@ This project automates the process of sending email notifications for new opport
    APP_PASSWORD = "your_app_password"
    ```
 
-3. **Running the Email Sender Script:**
+5. **Running the Email Sender Script:**
 
 ### Main Script (Email Sender)
 The email sender script performs the following tasks:
@@ -110,5 +110,3 @@ To automate the execution of the email sender script on Unix-based systems like 
 
 ## Summary
 This project automates the process of sending email notifications for new opportunities scraped from the UNC Opportunities Board. Ensure you configure the `config.py` file and have the necessary libraries installed before running the email sender script.
-
-Setting up Task Scheduler on Windows or cron on Unix-based systems allows for the automation of running the email sender script at specified intervals, ensuring timely notifications for new opportunities.
