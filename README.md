@@ -1,20 +1,22 @@
-Certainly! Here is the cleaned-up README without the actual script code:
+Got it! Here's the revised README focusing on setting up Task Scheduler on Windows and cron on Unix-based systems specifically for running the email sender script:
 
-# README for UNC Opportunities Board Data Scraper
+---
+
+# README for UNC Opportunities Board Email Sender
 
 ## Overview
-This project is a data scraper for the UNC Opportunities Board, which collects opportunities listed on the board and sends an email notification if new opportunities are found. The scraper also includes functionality to update a list of buzzwords used for filtering and evaluating the opportunities.
+This project automates the process of sending email notifications for new opportunities scraped from the UNC Opportunities Board. It filters opportunities based on predefined buzzwords and sends email notifications using Python scripts.
 
 ## Requirements
 - Python 3.6+
-- Required libraries: `requests`, `beautifulsoup4`, `pandas`, `smtplib`, `ssl`
+- Required libraries: `smtplib`, `ssl`, `pandas`
 - An app password for your email account (if using Gmail, this is necessary for SMTP authentication)
 
 ## Setup
 
 1. **Install Required Libraries:**
    ```bash
-   pip install requests beautifulsoup4 pandas
+   pip install pandas
    ```
 
 2. **Configuration:**
@@ -25,60 +27,88 @@ This project is a data scraper for the UNC Opportunities Board, which collects o
    APP_PASSWORD = "your_app_password"
    ```
 
-3. **Buzzwords File:**
-   Create a CSV file named `buzzwords.csv` with a column `buzz_list` that contains buzzwords for filtering opportunities.
+3. **Running the Email Sender Script:**
 
-## Running the Scraper
+### Main Script (Email Sender)
+The email sender script performs the following tasks:
+- Reads the list of opportunities from `opportunities.csv`.
+- Sends an email notification for each new opportunity found since the last run.
 
-### Main Script
-The main script performs the following tasks:
+## Setting Up Automation
 
-1. **Scrape the UNC Opportunities Board:**
-   - Collects the titles and dates of the opportunities.
-   - Filters and counts relevant buzzwords in the descriptions.
+### Task Scheduler (Windows)
 
-2. **Compare with Previous Data:**
-   - Checks if there are new opportunities compared to the last run.
-   - If new opportunities are found, sends an email notification.
+To automate the execution of the email sender script on Windows, you can use Task Scheduler.
 
-3. **Email Notification:**
-   - Sends an email with the details of the new opportunity.
+#### Step-by-Step Guide
 
-## Setting Up a Cron Job (Linux/macOS)
+1. **Open Task Scheduler:**
+   - Press `Win + R`, type `taskschd.msc`, and press Enter to open the Task Scheduler.
 
-To automate the execution of your scripts, you can set up a cron job.
+2. **Create a Basic Task:**
+   - In the Task Scheduler window, click on "Create Basic Task" in the Actions panel.
+   - Give your task a name and description, then click "Next".
 
-### Step-by-Step Guide
+3. **Set the Trigger:**
+   - Choose how often you want the task to run (daily, weekly, etc.), then click "Next".
+   - Set the start date and time for when you want the task to begin, then click "Next".
 
-1. **Open the Crontab Editor:**
-   ```bash
-   crontab -e
-   ```
+4. **Start a Program:**
+   - Select "Start a Program" and click "Next".
 
-2. **Add a New Cron Job:**
-   Add the following lines to schedule your scripts. This example runs the main scraper script every day at 8 AM and the buzzwords updater every Sunday at 9 AM.
+5. **Program/Script:**
+   - Browse to your Python executable (e.g., `C:\Python39\python.exe`).
+   - In the "Add arguments" field, type the path to your email sender script (e.g., `C:\path\to\your\email_sender.py`).
+   - In the "Start in" field, type the directory where your email sender script is located (e.g., `C:\path\to\your`).
 
-   ```bash
-   # Run main scraper script daily at 8 AM
-   0 8 * * * /usr/bin/python3 /path/to/your/main_script.py
-   ```
+6. **Finish:**
+   - Review your settings and click "Finish" to create the task.
 
-   Make sure to replace `/usr/bin/python3` with the path to your Python interpreter and `/path/to/your/` with the path to your script files.
+#### Example: Setting Up Task Scheduler for Daily Script Execution
 
-3. **Save and Exit:**
-   Save the changes and exit the editor (usually by pressing `CTRL+O` to save and `CTRL+X` to exit in nano).
+1. **Create Basic Task:**
+   - Name: `UNC Opportunities Email Sender`
+   - Description: `Sends email notifications for new opportunities daily`
 
-### Checking the Cron Job (macOS)
+2. **Set Trigger:**
+   - Daily
+   - Start date: `07/11/2024`
+   - Start time: `08:00 AM`
 
-On macOS, you can also use the `launchd` system to schedule tasks. However, using cron is simpler for most basic tasks. Here’s how you can check your cron jobs:
+3. **Action: Start a Program**
+   - Program/Script: `C:\Python39\python.exe`
+   - Add arguments: `C:\path\to\your\email_sender.py`
+   - Start in: `C:\path\to\your`
 
-```bash
-crontab -l
-```
+4. **Finish:**
+   - Review the task summary and click "Finish".
 
-This command lists all the cron jobs for the current user.
+### cron (Unix-based Systems)
+
+To automate the execution of the email sender script on Unix-based systems like Linux or macOS, you can use cron.
+
+#### Step-by-Step Guide
+
+1. **Open Crontab Editor:**
+   - Open a terminal window.
+
+2. **Edit Crontab:**
+   - Type `crontab -e` and press Enter.
+
+3. **Add a New Cron Job:**
+   - Add the following line to schedule your email sender script. This example runs the script daily at 8 AM.
+
+     ```bash
+     # Run email sender script daily at 8 AM
+     0 8 * * * /usr/bin/python3 /path/to/your/email_sender.py
+     ```
+
+   - Make sure to replace `/usr/bin/python3` with the path to your Python interpreter and `/path/to/your/` with the path to your script file.
+
+4. **Save and Exit:**
+   - Save the changes and exit the editor (usually by pressing `CTRL+O` to save and `CTRL+X` to exit in nano).
 
 ## Summary
-This project automates the process of scraping opportunities from the UNC Opportunities Board and notifies users via email if new opportunities are found. It also keeps a list of buzzwords up to date for filtering opportunities. Ensure you configure the `config.py` file and have the necessary libraries installed before running the scripts.
+This project automates the process of sending email notifications for new opportunities scraped from the UNC Opportunities Board. Ensure you configure the `config.py` file and have the necessary libraries installed before running the email sender script.
 
-Additionally, setting up a cron job allows for the automation of running these scripts at specified intervals, ensuring the data and notifications are always up to date.
+Setting up Task Scheduler on Windows or cron on Unix-based systems allows for the automation of running the email sender script at specified intervals, ensuring timely notifications for new opportunities.
