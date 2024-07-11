@@ -68,8 +68,6 @@ for i in range(len(comp_list)):
                 fit_number += 1
     fit_array.append(fit_number)
 
-libray = {'Title': headings_list[2:], 'Post Date': date_list_post, 'End Date': date_list_close, 'Fit': fit_array}
-df = pd.DataFrame(data=libray)
+dataframe = {'Title': headings_list[2:], 'Post_Date': date_list_post, 'End_Date': date_list_close, 'Fit': fit_array}
 
-
-print(df)
+df = pd.DataFrame(dataframe)
